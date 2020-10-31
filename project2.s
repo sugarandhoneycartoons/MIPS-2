@@ -72,6 +72,13 @@
 		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
 		j space_and_extra 
 
+	is_blank:
+		#check if there have been any nonblank characters as this function is not useful otherwise
+		add $t7, $zero, 0
+		beqz $s0, space_and_extra
+		add $s1, $zero, 1
+		j space_and_extra
+		
 	endloop:
 		#this is going to print the total
 		li $v0, 1 
