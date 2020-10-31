@@ -42,3 +42,8 @@
 		slt $t4, $t2, '{' #check if value is less than ascii value of {.
 		beq $t4, 1, little_letters #if t4 is one then go to little_letters
 		j space_and_extra #if value is not useful then go to space_and_extra
+
+	big_letters:
+		addi $t2, $t2, -55 #convert $t2 to a number + 10 to be added to the sum $t3 ($t2 - 65 or $t2 - 0x37)
+		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
+		j space_and_extra
