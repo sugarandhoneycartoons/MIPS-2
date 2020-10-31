@@ -1,6 +1,7 @@
 # This code works fine in QtSpim simulator
 .data
 	string: .word 4
+	invalid_message: .asciiz "\nInvalid input\n"
 	
 .text
 	
@@ -11,19 +12,27 @@
     	la $a1, string
     	li $v0, 8
     	syscall
-
+		
 		move $t3, $zero #this will be the "total" variable and it will have a value of zero
+		move $t5, $zero #this is the character count variable
 		la $t0, string #loads the string to this address
-			
+		
 	loop:
 		lb $t2, ($t0) # loads a byte into $t2
 		beqz $t2, endloop #if $t2 is equal to zero, go to endloop
 		beq $t2, ' ', space_and_extra
 		j str2int
-		
+
 	space_and_extra:
 		addi $t0, $t0, 1 #moves through the loop by 1
+		addi $t5, $t5, 1 #adds 1 to variable count
+		slt $t4, $t5, 5 #if t5 is less than 5 then t4 is 1
+		beqz $t4, invalid_Input #if t4 is equal to zero then go to invalid_Input
 		j loop #jumps back to the loop function
+        
+    invalid_Input:
+        
+
 
 	str2int:
 		#$t4 is acting as a boolian of sorts
@@ -47,7 +56,7 @@
 		addi $t2, $t2, -55 #convert $t2 to a number + 10 to be added to the sum $t3 ($t2 - 65 or $t2 - 0x37)
 		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
 		j space_and_extra
-	
+
 	little_letters:
 		addi $t2, $t2, -87 #convert $t2 to a number + 10 to be added to the sum $t3 ($t2 - 97 or $t2 - 0x57)
 		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
@@ -63,7 +72,7 @@
 		li $v0, 1 
 		move $a0, $t3
 		syscall
-		
+
 #tells it that this is the end of main and ends the program
 li $v0, 10 
 syscall
