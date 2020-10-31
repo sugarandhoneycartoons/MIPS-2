@@ -24,10 +24,15 @@
 	space_and_extra:
 		addi $t0, $t0, 1 #moves through the loop by 1
 		j loop #jumps back to the loop function
-		
+
 	str2int:
 		#$t4 is acting as a boolian of sorts
 		slt $t4, $t2, '0' #check if value is less than ascii value of 0
 		beq $t4, 1, space_and_extra #check if t4 is one. if one then go to loop
 		slt $t4, $t2, 0x3A #check if value is less than ascii value of :.
 		beq $t4, 1, numbers #if t4 is one then go to numbers
+		
+		slt $t4, $t2, 'A' #check if value is less than ascii value of A
+		beq $t4, 1, space_and_extra #check if t4 is one. if one then go to loop
+		slt $t4, $t2, '[' #check if value is less than ascii value of [.
+		beq $t4, 1, big_letters #if t4 is one then go to numbers
