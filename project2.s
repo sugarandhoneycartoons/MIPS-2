@@ -57,3 +57,9 @@
 		addi $t2, $t2, -48 #convert $t2 to a number to be added to the sum $t3 ($t2 - 48 or $t2 - 0x30)
 		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
 		j space_and_extra 
+
+	endloop:
+		#this is going to print the total
+		li $v0, 1 
+		move $a0, $t3
+		syscall
