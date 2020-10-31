@@ -1,7 +1,7 @@
 # This code works fine in QtSpim simulator
 .data
+    invalid_message: .asciiz "Invalid input\n"
 	string: .word 4
-	invalid_message: .asciiz "\nInvalid input\n"
 	
 .text
 	
@@ -26,13 +26,18 @@
 	space_and_extra:
 		addi $t0, $t0, 1 #moves through the loop by 1
 		addi $t5, $t5, 1 #adds 1 to variable count
-		slt $t4, $t5, 5 #if t5 is less than 5 then t4 is 1
-		beqz $t4, invalid_Input #if t4 is equal to zero then go to invalid_Input
+
+		beq $t5, 5, invalid_input #if t5 is less than 5 then t6 is 1
+		
 		j loop #jumps back to the loop function
         
-    invalid_Input:
+    invalid_input:
+		la $a0, invalid_message
+        li $v0, 4
+		syscall
         
-
+        li $v0, 10 
+        syscall
 
 	str2int:
 		#$t4 is acting as a boolian of sorts
