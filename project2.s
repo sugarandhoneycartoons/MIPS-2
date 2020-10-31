@@ -78,6 +78,12 @@
 		beqz $s0, space_and_extra
 		add $s1, $zero, 1
 		j space_and_extra
+
+	is_nonblank:
+		add $t7, $zero, 1
+		add $s0, $zero, 1
+		beq $s1, 1, invalid_input
+		j space_and_extra
 		
 	endloop:
 		#this is going to print the total
