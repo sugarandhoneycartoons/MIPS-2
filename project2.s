@@ -20,3 +20,7 @@
 		beqz $t2, endloop #if $t2 is equal to zero, go to endloop
 		beq $t2, ' ', space_and_extra
 		j str2int
+		
+	space_and_extra:
+		addi $t0, $t0, 1 #moves through the loop by 1
+		j loop #jumps back to the loop function
