@@ -15,6 +15,10 @@
 		
 		move $t3, $zero #this will be the "total" variable and it will have a value of zero
 		move $t5, $zero #this is the character count variable
+
+		move $t7, $zero
+		move $s0, $zero
+
 		la $t0, string #loads the string to this address
 		
 	loop:
@@ -84,7 +88,7 @@
 		add $s0, $zero, 1
 		beq $s1, 1, invalid_input
 		j space_and_extra
-		
+
 	endloop:
 		#this is going to print the total
 		li $v0, 1 
