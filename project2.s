@@ -47,3 +47,8 @@
 		addi $t2, $t2, -55 #convert $t2 to a number + 10 to be added to the sum $t3 ($t2 - 65 or $t2 - 0x37)
 		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
 		j space_and_extra
+	
+	little_letters:
+		addi $t2, $t2, -87 #convert $t2 to a number + 10 to be added to the sum $t3 ($t2 - 97 or $t2 - 0x57)
+		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
+		j space_and_extra
