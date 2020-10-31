@@ -32,11 +32,11 @@
 		j loop #jumps back to the loop function
         
     invalid_input:
-		la $a0, invalid_message
+		la $a0, invalid_message #These lines print out "invalid input"
         li $v0, 4
 		syscall
         
-        li $v0, 10 
+        li $v0, 10 #ends the program
         syscall
 
 	str2int:
