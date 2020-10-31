@@ -35,4 +35,10 @@
 		slt $t4, $t2, 'A' #check if value is less than ascii value of A
 		beq $t4, 1, space_and_extra #check if t4 is one. if one then go to loop
 		slt $t4, $t2, '[' #check if value is less than ascii value of [.
-		beq $t4, 1, big_letters #if t4 is one then go to numbers
+		beq $t4, 1, big_letters #if t4 is one then go to big_letters
+		
+		slt $t4, $t2, 'a' #check if value is less than ascii value of a
+		beq $t4, 1, space_and_extra #check if t4 is one. if one then go to loop
+		slt $t4, $t2, '{' #check if value is less than ascii value of {.
+		beq $t4, 1, little_letters #if t4 is one then go to little_letters
+		j space_and_extra #if value is not useful then go to space_and_extra
