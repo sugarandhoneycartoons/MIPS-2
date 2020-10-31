@@ -1,4 +1,6 @@
 # This code works fine in QtSpim simulator
+#the base is 27
+
 .data
     invalid_message: .asciiz "Invalid input\n"
 	string: .word 4
@@ -7,7 +9,6 @@
 	
 	main: 
 		#gets the input from the user
-
 		la $a0, string
     	la $a1, string
     	li $v0, 8
@@ -39,7 +40,8 @@
 		j loop #jumps back to the loop function
         
     invalid_input:
-		la $a0, invalid_message #These lines print out "invalid input"
+        #These lines print out "invalid input"
+		la $a0, invalid_message 
         li $v0, 4
 		syscall
         
@@ -51,7 +53,6 @@
 		beq $t2, 0xA, space_and_extra #is a NL feed/newline, go to space_and_extra
 		beq $t2, 0x9, is_blank #if t2 is a blank, go to is_blank
 		beq $t2, 0x20, is_blank #if t2 is a tab, go to is_blank
-
 
 		slt $t4, $t2, '0' #check if value is less than ascii value of 0
 		beq $t4, 1, invalid_input #check if t4 is one. if one then go to loop
@@ -89,12 +90,21 @@
 		#check if there have been any nonblank characters as this function is not useful otherwise
 		add $t7, $zero, 0
 		beqz $s0, space_and_extra
+		#if so then tell program that there are blank characters after nonblank characters
 		add $s1, $zero, 1
 		j space_and_extra
 
 	is_nonblank:
+        #check if the nonblank character's value is within base 27
+		slt $t4, $t2, 27
+		beqz $t4, invalid_input #if not then report an invalid input
+        
+        #tells the program that the current character is nonblank and that there have been nonblank characters
 		add $t7, $zero, 1
 		add $s0, $zero, 1
+        
+		#checks if there have been blank characters in between nonblank characters.
+		#if so, then report invalid input
 		beq $s1, 1, invalid_input
 		j space_and_extra
 
