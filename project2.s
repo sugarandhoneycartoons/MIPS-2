@@ -8,11 +8,16 @@
 .text
 	
 	main: 
+
+		jal user_input
+
+	user_input:
 		#gets the input from the user
 		la $a0, string
     	la $a1, string
     	li $v0, 8
     	syscall
+		jr $ra #returns back to the main function
 		
 		#t7 is current character a non blank character
 		#s0 have there been any non blank characters
