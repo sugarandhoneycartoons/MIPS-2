@@ -20,6 +20,8 @@
 
 		jal get_user_input
 
+		la $t0, string #loads the string to this address
+
 	get_user_input:
 		#gets the input from the user
 		la $a0, string
@@ -27,12 +29,6 @@
     	li $v0, 8
     	syscall
 		jr $ra #returns back to the main function
-		
-		
-        
-		
-
-		la $t0, string #loads the string to this address
 		
 	loop:
 		lb $t2, ($t0) # loads a byte into $t2
