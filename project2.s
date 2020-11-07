@@ -8,35 +8,23 @@
 .text
 	
 	main: 
-
-		#t7 is current character a non blank character
-		#s0 have there been any non blank characters
-		#s1 if there have been any blank characters
-		move $t7, $zero
-		move $s0, $zero
-
-		move $t3, $zero #this will be the "total" variable and it will have a value of zero
-		move $t5, $zero #this is the character count variable
-
-		#these call the subfunctions 
-		jal get_user_input
-		jal loop
-		jal print_total
-
-		#tells it that this is the end of main and ends the program
-		li $v0, 10 
-		syscall
-
-	get_user_input:
 		#gets the input from the user
 		la $a0, string
     	la $a1, string
     	li $v0, 8
     	syscall
+		
+		#t7 is current character a non blank character
+		#s0 have there been any non blank characters
+		#s1 if there have been any blank characters
+		
+		move $t3, $zero #this will be the "total" variable and it will have a value of zero
+		move $t5, $zero #this is the character count variable
+        
+		move $t7, $zero
+		move $s0, $zero
 
 		la $t0, string #loads the string to this address
-
-		jr $ra #returns back to the main function
 		
 	loop:
 		lb $t2, ($t0) # loads a byte into $t2
@@ -46,7 +34,7 @@
 	space_and_extra:
 		addi $t0, $t0, 1 #moves through the loop by 1
 		addi $t5, $t5, 1 #adds 1 to variable count
-		beq $t2, 0xA, loop
+		beq $t2, 0xFF, loop
 		beq $t5, 5, invalid_input #if t5 is less than 5 then t5 is 1
 		
 		j loop #jumps back to the loop function
@@ -60,9 +48,13 @@
         li $v0, 10 #ends the program
         syscall
 
+	if_enter:
+		beq $t5,
+		add $t2, $zero, 0xFF
+
 	str2int:
 		#$t4 is acting as a boolian of sorts
-		beq $t2, 0xA, space_and_extra #is a NL feed/newline, go to space_and_extra
+		beq $t2, 0xA, if_enter #is a NL feed/newline, go to space_and_extra
 		beq $t2, 0x9, is_blank #if t2 is a blank, go to is_blank
 		beq $t2, 0x20, is_blank #if t2 is a tab, go to is_blank
 
@@ -121,12 +113,11 @@
 		j space_and_extra
 
 	endloop:
-		#takes us back to the main function
-		jr $ra
-		
-	print_total:
 		#this is going to print the total
 		li $v0, 1 
 		move $a0, $t3
 		syscall
 
+#tells it that this is the end of main and ends the program
+li $v0, 10 
+syscall
