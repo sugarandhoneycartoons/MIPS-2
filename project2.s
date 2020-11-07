@@ -49,7 +49,7 @@
         syscall
 
 	if_enter:
-		beq $t5,
+		beqz $t5, invalid_input
 		add $t2, $zero, 0xFF
 
 	str2int:
