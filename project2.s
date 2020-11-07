@@ -21,6 +21,7 @@
 		#these call the subfunctions 
 		jal get_user_input
 		jal loop
+		jal print_total
 
 	get_user_input:
 		#gets the input from the user
@@ -116,6 +117,10 @@
 		j space_and_extra
 
 	endloop:
+		#takes us back to the main function
+		jr $ra
+		
+	print_total:
 		#this is going to print the total
 		li $v0, 1 
 		move $a0, $t3
