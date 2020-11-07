@@ -18,9 +18,9 @@
 		move $t3, $zero #this will be the "total" variable and it will have a value of zero
 		move $t5, $zero #this is the character count variable
 
+		#these call the subfunctions 
 		jal get_user_input
-
-		la $t0, string #loads the string to this address
+		jal loop
 
 	get_user_input:
 		#gets the input from the user
@@ -28,6 +28,9 @@
     	la $a1, string
     	li $v0, 8
     	syscall
+
+		la $t0, string #loads the string to this address
+
 		jr $ra #returns back to the main function
 		
 	loop:
