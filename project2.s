@@ -8,23 +8,30 @@
 .text
 	
 	main: 
+		
+		#t7 is current character a non blank character
+		#s0 have there been any non blank characters
+		#s1 if there have been any blank characters
+
+		move $t7, $zero
+		move $s0, $zero
+		
+		move $t3, $zero #this will be the "total" variable and it will have a value of zero
+		move $t5, $zero #this is the character count variable
+    
+		jal get_user_input
+		jal loop
+
+	get_user_input:
 		#gets the input from the user
 		la $a0, string
     	la $a1, string
     	li $v0, 8
     	syscall
-		
-		#t7 is current character a non blank character
-		#s0 have there been any non blank characters
-		#s1 if there have been any blank characters
-		
-		move $t3, $zero #this will be the "total" variable and it will have a value of zero
-		move $t5, $zero #this is the character count variable
-        
-		move $t7, $zero
-		move $s0, $zero
 
 		la $t0, string #loads the string to this address
+
+		jr $ra
 		
 	loop:
 		lb $t2, ($t0) # loads a byte into $t2
