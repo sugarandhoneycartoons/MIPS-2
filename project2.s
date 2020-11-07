@@ -13,12 +13,16 @@
 		#s0 have there been any non blank characters
 		#s1 if there have been any blank characters
 
+		addi $t8, $zero, 27 #this register is useful for the calculations in is_nonblank
+
 		move $t7, $zero
 		move $s0, $zero
 		
 		move $t3, $zero #this will be the "total" variable and it will have a value of zero
 		move $t5, $zero #this is the character count variable
     
+		move $t6, $zero #this is the iterator variable
+
 		#these are the subprograms
 		jal get_user_input
 		jal loop
@@ -89,18 +93,14 @@
 
 	big_letters:
 		addi $t2, $t2, -55 #convert $t2 to a number + 10 to be added to the sum $t3 ($t2 - 65 or $t2 - 0x37)
-		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
-
 		j is_nonblank
 
 	little_letters:
 		addi $t2, $t2, -87 #convert $t2 to a number + 10 to be added to the sum $t3 ($t2 - 97 or $t2 - 0x57)
-		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
 		j is_nonblank
 		
 	numbers:
 		addi $t2, $t2, -48 #convert $t2 to a number to be added to the sum $t3 ($t2 - 48 or $t2 - 0x30)
-		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
 		j is_nonblank
 
 	is_blank:
@@ -115,8 +115,12 @@
         #check if the nonblank character's value is within base 27
 		slt $t4, $t2, 27
 		beqz $t4, invalid_input #if not then report an invalid input
+
+		mult $t3, $t8 #multiplies the total by 27
+		mflo $t3 #moves the contents of LO to $t3 -- the total variable
+		add $t3, $t3, $t2 #adds the value of $t2 into the "total" variable
         
-        #tells the program that the current character is nonblank and that there have been nonblank characters
+		#tells the program that the current character is nonblank and that there have been nonblank characters
 		add $t7, $zero, 1
 		add $s0, $zero, 1
         
