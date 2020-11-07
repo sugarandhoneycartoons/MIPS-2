@@ -23,6 +23,10 @@
 		jal loop
 		jal print_total
 
+		#tells it that this is the end of main and ends the program
+		li $v0, 10 
+		syscall
+
 	get_user_input:
 		#gets the input from the user
 		la $a0, string
@@ -126,6 +130,3 @@
 		move $a0, $t3
 		syscall
 
-#tells it that this is the end of main and ends the program
-li $v0, 10 
-syscall
