@@ -19,8 +19,14 @@
 		move $t3, $zero #this will be the "total" variable and it will have a value of zero
 		move $t5, $zero #this is the character count variable
     
+		#these are the subprograms
 		jal get_user_input
 		jal loop
+		jal print_total
+
+		#tells it that this is the end of main and ends the program
+		li $v0, 10 
+		syscall
 
 	get_user_input:
 		#gets the input from the user
@@ -120,11 +126,13 @@
 		j space_and_extra
 
 	endloop:
+		jr $ra #returns to the main function
+
+	print_total:
 		#this is going to print the total
 		li $v0, 1 
 		move $a0, $t3
 		syscall
 
-#tells it that this is the end of main and ends the program
-li $v0, 10 
-syscall
+		jr $ra #returns to the main function
+
